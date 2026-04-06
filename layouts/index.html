@@ -1,0 +1,22 @@
+{{ define "main" }}
+<section class="cdk-shell ph3 ph4-ns pb5 pb6-l">
+  <div class="cdk-panel center mw8">
+    <div class="cdk-grid">
+      <div class="cdk-copy nested-links mid-gray">
+        <p class="cdk-eyebrow">Coming soon</p>
+        {{ .Content }}
+      </div>
+      <aside class="cdk-card">
+        <h2 class="f3 near-black mt0 mb3">Build in public</h2>
+        <p class="mid-gray mt0 mb4 lh-copy">
+          We are starting with a focused landing page while the full project
+          site, documentation, and launch content take shape.
+        </p>
+        <a class="cdk-button" href="{{ site.Params.project_url | safeURL }}">
+          View the project on GitHub
+        </a>
+      </aside>
+    </div>
+  </div>
+</section>
+{{ end }}

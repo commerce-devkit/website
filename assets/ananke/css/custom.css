@@ -1,0 +1,87 @@
+:root {
+  --cdk-accent: #7c3aed;
+  --cdk-accent-dark: #4c1d95;
+  --cdk-ink: #0f172a;
+  --cdk-panel: rgba(255, 255, 255, 0.94);
+  --cdk-border: rgba(124, 58, 237, 0.14);
+}
+
+.cdk-shell {
+  margin-top: -2.5rem;
+  position: relative;
+  z-index: 2;
+}
+
+.cdk-panel {
+  background: var(--cdk-panel);
+  border: 1px solid var(--cdk-border);
+  border-radius: 1.5rem;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+}
+
+.cdk-grid {
+  display: grid;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.cdk-copy {
+  line-height: 1.8;
+}
+
+.cdk-copy p {
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+.cdk-copy p + p {
+  margin-top: 1rem;
+}
+
+.cdk-eyebrow {
+  color: var(--cdk-accent-dark);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.cdk-card {
+  background: linear-gradient(180deg, #f5f3ff 0%, #ede9fe 100%);
+  border-radius: 1.25rem;
+  padding: 1.5rem;
+}
+
+.cdk-button {
+  align-items: center;
+  background: linear-gradient(135deg, var(--cdk-accent) 0%, var(--cdk-accent-dark) 100%);
+  border-radius: 999px;
+  color: #fff;
+  display: inline-flex;
+  font-weight: 700;
+  justify-content: center;
+  min-height: 3rem;
+  padding: 0.75rem 1.25rem;
+  text-decoration: none;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.cdk-button:hover,
+.cdk-button:focus {
+  box-shadow: 0 16px 30px rgba(76, 29, 149, 0.22);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+@media screen and (min-width: 60em) {
+  .cdk-shell {
+    margin-top: -4rem;
+  }
+
+  .cdk-grid {
+    gap: 2.5rem;
+    grid-template-columns: minmax(0, 1.6fr) minmax(18rem, 1fr);
+    padding: 3rem;
+  }
+}
