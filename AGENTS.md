@@ -1,4 +1,4 @@
-# AGENTS.md
+# Agent Guidelines
 
 ## Purpose
 
@@ -9,10 +9,13 @@ This repository uses the Hugo static site generator. Agents (human or AI) contri
 ## Repository Overview
 
 - Static site built with Hugo
+- Theme baseline lives in `/themes/ananke` as a Git submodule
+- Site configuration lives in `/hugo.toml`
 - Content lives in `/content`
-- Layouts in `/layouts`
-- Static assets in `/static`
-- Configuration in `hugo.toml` (or `.yaml` / `.json`)
+- Site-level template overrides live in `/layouts`
+- Custom theme CSS lives in `/assets/ananke/css`
+- Static assets and the GitHub Pages `CNAME` file live in `/static`
+- Deployment workflow lives in `/.github/workflows/hugo.yml`
 
 ---
 
@@ -31,14 +34,28 @@ This repository uses the Hugo static site generator. Agents (human or AI) contri
 - Use front matter consistently (`title`, `date`, `draft`, etc.)
 - Keep content in Markdown unless there is a strong reason otherwise
 - Use archetypes when creating new content
+- Prefer site-level overrides in `/layouts` and `/assets` before editing files in
+  `/themes/ananke`
+- Treat the Ananke theme as an upstream dependency; only modify the theme
+  submodule directly when the change cannot be handled in the site itself
+- Initialize or update the theme after cloning with:
+
+  ```bash
+  git submodule update --init --recursive
+  ```
+
 - Do not commit generated `/public` files unless explicitly required
-- Validate changes with:
+- Do not commit generated `/resources/_gen` files
+- Validate both local preview and production output with:
 
   ```bash
   hugo server
+  hugo --gc --minify
   ```
 
 - Ensure no broken links or missing assets
+- Keep the custom domain configuration in `static/CNAME` aligned with the target
+  GitHub Pages domain
 
 ---
 
@@ -71,6 +88,8 @@ Use scope when helpful:
 - `theme`
 - `config`
 - `assets`
+- `docs`
+- `ci`
 - `seo`
 
 Example:
@@ -141,6 +160,8 @@ the authoring experience straightforward for contributors.
 - Reference related issues if applicable
 - Ensure the site builds successfully
 - Preview changes locally before submitting
+- Verify GitHub Pages and custom-domain changes carefully when touching the
+  deployment workflow or `CNAME`
 
 ---
 
@@ -151,7 +172,3 @@ the authoring experience straightforward for contributors.
 - Prefer multiple small commits over one large commit
 - When generating content, ensure it matches existing tone and structure
 - Do not introduce breaking structural changes without explicit instruction
-
----
-
-If you want, I can tailor this further (e.g., add multilingual content rules, SEO checklist, or CI integration).
