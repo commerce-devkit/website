@@ -42,7 +42,7 @@ jobs:
         env:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
-        run: hugo --gc --minify
+        run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
