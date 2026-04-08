@@ -1,9 +1,13 @@
 :root {
-  --cdk-accent: #7c3aed;
-  --cdk-accent-dark: #4c1d95;
+  --cdk-primary: #0a6ed1;
+  --cdk-primary-dark: #0854a0;
+  --cdk-secondary: #2ecc71;
+  --cdk-secondary-dark: #1f9d55;
   --cdk-ink: #0f172a;
-  --cdk-panel: rgba(255, 255, 255, 0.94);
-  --cdk-border: rgba(124, 58, 237, 0.14);
+  --cdk-panel: rgba(255, 255, 255, 0.96);
+  --cdk-border: rgba(10, 110, 209, 0.18);
+  --cdk-soft-blue: rgba(10, 110, 209, 0.08);
+  --cdk-soft-green: rgba(46, 204, 113, 0.12);
 }
 
 .cdk-shell {
@@ -13,10 +17,25 @@
 }
 
 .cdk-panel {
-  background: var(--cdk-panel);
+  background:
+    linear-gradient(135deg, rgba(10, 110, 209, 0.05) 0%, rgba(255, 255, 255, 0) 40%),
+    linear-gradient(180deg, var(--cdk-panel) 0%, rgba(248, 250, 252, 0.98) 100%);
   border: 1px solid var(--cdk-border);
   border-radius: 1.5rem;
   box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
+  overflow: hidden;
+  position: relative;
+}
+
+.cdk-panel::before {
+  background: linear-gradient(90deg, var(--cdk-primary) 0%, var(--cdk-secondary) 100%);
+  content: "";
+  display: block;
+  height: 0.35rem;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .cdk-grid {
@@ -26,6 +45,7 @@
 }
 
 .cdk-copy {
+  color: var(--cdk-ink);
   line-height: 1.8;
 }
 
@@ -39,7 +59,7 @@
 }
 
 .cdk-eyebrow {
-  color: var(--cdk-accent-dark);
+  color: var(--cdk-primary-dark);
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.18em;
@@ -48,15 +68,23 @@
 }
 
 .cdk-card {
-  background: linear-gradient(180deg, #f5f3ff 0%, #ede9fe 100%);
+  background:
+    radial-gradient(circle at top right, rgba(46, 204, 113, 0.26) 0%, rgba(46, 204, 113, 0) 45%),
+    linear-gradient(180deg, rgba(10, 110, 209, 0.1) 0%, rgba(255, 255, 255, 0.95) 100%);
+  border: 1px solid rgba(10, 110, 209, 0.12);
   border-radius: 1.25rem;
   padding: 1.5rem;
 }
 
+.cdk-card h2 {
+  color: var(--cdk-ink);
+}
+
 .cdk-button {
   align-items: center;
-  background: linear-gradient(135deg, var(--cdk-accent) 0%, var(--cdk-accent-dark) 100%);
+  background: linear-gradient(135deg, var(--cdk-primary) 0%, var(--cdk-secondary) 100%);
   border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(10, 110, 209, 0.24);
   color: #fff;
   display: inline-flex;
   font-weight: 700;
@@ -69,7 +97,7 @@
 
 .cdk-button:hover,
 .cdk-button:focus {
-  box-shadow: 0 16px 30px rgba(76, 29, 149, 0.22);
+  box-shadow: 0 16px 30px rgba(10, 110, 209, 0.28);
   color: #fff;
   transform: translateY(-1px);
 }
