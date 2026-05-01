@@ -1,0 +1,16 @@
+<nav class="cdk-nav" aria-label="Primary">
+  <div class="cdk-nav__inner">
+    <a class="cdk-brand" href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a>
+    {{ with .Site.Menus.main }}
+      <ul class="cdk-menu">
+        {{ range . }}
+          {{ $target := .URL | relURL }}
+          {{ $isActive := eq $target $.RelPermalink }}
+          <li>
+            <a href="{{ $target }}"{{ if $isActive }} aria-current="page"{{ end }}>{{ .Name }}</a>
+          </li>
+        {{ end }}
+      </ul>
+    {{ end }}
+  </div>
+</nav>

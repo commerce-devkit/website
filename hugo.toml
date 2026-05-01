@@ -4,16 +4,27 @@ title = 'Commerce DevKit'
 theme = 'ananke'
 enableRobotsTXT = true
 disableKinds = ['taxonomy', 'term']
+copyright = 'Commerce DevKit'
 
 [params]
 description = 'The project aims to provide fast, open-source tooling for SAP Commerce development across modern editors.'
 project_url = 'https://github.com/commerce-devkit'
-background_color_class = 'bg-dark-gray'
-body_classes = 'avenir bg-near-white'
-cover_dimming_class = 'bg-black-40'
+body_classes = 'commerce-devkit-site'
 custom_css = ['custom.css']
 favicon = 'favicon.svg'
 
-[params.ananke.home]
-content_alignment = 'center'
-show_recent_posts = false
+[params.community]
+github = 'https://github.com/commerce-devkit'
+discord = 'https://discord.gg/jF9r3Qq9KY'
+irc = 'ircs://irc.libera.chat:6697/commerce-devkit'
+twitter = 'https://twitter.com/CommerceDevKit'
+youtube = 'https://www.youtube.com/@CommerceDevKit'
+
+[social]
+twitter = 'CommerceDevKit'
+
+[[menu.main]]
+identifier = 'home'
+name = 'Home'
+url = '/'
+weight = 1

@@ -1,115 +1,241 @@
 :root {
-  --cdk-primary: #0a6ed1;
-  --cdk-primary-dark: #0854a0;
-  --cdk-secondary: #2ecc71;
-  --cdk-secondary-dark: #1f9d55;
-  --cdk-ink: #0f172a;
-  --cdk-panel: rgba(255, 255, 255, 0.96);
-  --cdk-border: rgba(10, 110, 209, 0.18);
-  --cdk-soft-blue: rgba(10, 110, 209, 0.08);
-  --cdk-soft-green: rgba(46, 204, 113, 0.12);
+  --cdk-bg: #0f172a;
+  --cdk-surface: rgba(30, 41, 59, 0.72);
+  --cdk-surface-strong: rgba(15, 23, 42, 0.92);
+  --cdk-text: #e2e8f0;
+  --cdk-muted: #94a3b8;
+  --cdk-link: #38bdf8;
+  --cdk-link-hover: #7dd3fc;
+  --cdk-border: rgba(148, 163, 184, 0.24);
+  --cdk-shadow: 0 30px 80px rgba(2, 6, 23, 0.42);
 }
 
-.cdk-shell {
-  margin-top: -2.5rem;
-  position: relative;
-  z-index: 2;
-}
-
-.cdk-panel {
+html {
   background:
-    linear-gradient(135deg, rgba(10, 110, 209, 0.05) 0%, rgba(255, 255, 255, 0) 40%),
-    linear-gradient(180deg, var(--cdk-panel) 0%, rgba(248, 250, 252, 0.98) 100%);
-  border: 1px solid var(--cdk-border);
-  border-radius: 1.5rem;
-  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.18);
-  overflow: hidden;
+    radial-gradient(circle at top, rgba(56, 189, 248, 0.12), transparent 35%),
+    radial-gradient(
+      circle at bottom,
+      rgba(59, 130, 246, 0.18),
+      transparent 40%
+    ),
+    var(--cdk-bg);
+}
+
+body.commerce-devkit-site {
+  background: transparent;
+  color: var(--cdk-text);
+  display: flex;
+  flex-direction: column;
+  font-family:
+    Inter, "Avenir Next", "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    sans-serif;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+}
+
+.commerce-devkit-site main {
+  align-items: center;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  padding-bottom: 0;
+}
+
+.cdk-header,
+.cdk-footer {
   position: relative;
+  z-index: 1;
 }
 
-.cdk-panel::before {
-  background: linear-gradient(90deg, var(--cdk-primary) 0%, var(--cdk-secondary) 100%);
-  content: "";
-  display: block;
-  height: 0.35rem;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
+.cdk-nav,
+.cdk-footer__inner,
+.cdk-home__inner {
+  margin: 0 auto;
+  max-width: 72rem;
+  width: calc(100% - 3rem);
 }
 
-.cdk-grid {
+.cdk-nav {
+  padding: 1.5rem 0 0;
+}
+
+.cdk-nav__inner {
+  align-items: center;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.cdk-brand {
+  color: var(--cdk-text);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+
+.cdk-brand:hover,
+.cdk-brand:focus-visible {
+  color: var(--cdk-link-hover);
+}
+
+.cdk-menu {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cdk-menu a {
+  border-bottom: 2px solid transparent;
+  color: var(--cdk-muted);
+  display: inline-flex;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.2rem 0;
+  text-decoration: none;
+  transition:
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.cdk-menu a:hover,
+.cdk-menu a:focus-visible,
+.cdk-menu a[aria-current="page"] {
+  border-color: var(--cdk-link);
+  color: var(--cdk-text);
+}
+
+.cdk-home {
+  padding: 2.5rem 0 4rem;
+  width: 100%;
+}
+
+.cdk-home__inner {
   display: grid;
-  gap: 2rem;
-  padding: 2rem;
+  gap: 1.25rem;
+  justify-items: center;
+  text-align: center;
 }
 
-.cdk-copy {
-  color: var(--cdk-ink);
-  line-height: 1.8;
+.cdk-home__logo-frame {
+  max-width: 21rem;
+  overflow: hidden;
+  width: 58vw;
 }
 
-.cdk-copy p {
-  font-size: 1.125rem;
+.cdk-home__logo {
+  display: block;
+  filter: drop-shadow(var(--cdk-shadow));
+  height: auto;
+  max-width: none;
+  width: 100%;
+}
+
+.cdk-home__claim {
+  color: var(--cdk-text);
+  font-size: 1.2rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.5;
+  margin: 0;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  max-width: 40rem;
+}
+
+.cdk-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  justify-content: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cdk-social-links li {
+  align-items: center;
+  display: flex;
+}
+
+.cdk-social-link {
+  align-items: center;
+  color: var(--cdk-text);
+  display: flex;
+  justify-content: center;
+  line-height: 0;
+  text-decoration: none;
+}
+
+.cdk-social-link:hover,
+.cdk-social-link:focus-visible {
+  color: var(--cdk-text);
+}
+
+.cdk-social-link svg {
+  display: block;
+  fill: currentColor;
+  height: 1.8rem;
+  width: 1.8rem;
+}
+
+.cdk-footer {
+  padding: 0 0 1.5rem;
+}
+
+.cdk-footer__inner {
+  color: var(--cdk-muted);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.cdk-footer__inner p {
   margin: 0;
 }
 
-.cdk-copy p + p {
-  margin-top: 1rem;
+.cdk-sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
 
-.cdk-eyebrow {
-  color: var(--cdk-primary-dark);
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  margin-bottom: 1rem;
-  text-transform: uppercase;
+a:focus-visible {
+  outline: 3px solid rgba(125, 211, 252, 0.95);
+  outline-offset: 4px;
 }
 
-.cdk-card {
-  background:
-    radial-gradient(circle at top right, rgba(46, 204, 113, 0.26) 0%, rgba(46, 204, 113, 0) 45%),
-    linear-gradient(180deg, rgba(10, 110, 209, 0.1) 0%, rgba(255, 255, 255, 0.95) 100%);
-  border: 1px solid rgba(10, 110, 209, 0.12);
-  border-radius: 1.25rem;
-  padding: 1.5rem;
-}
-
-.cdk-card h2 {
-  color: var(--cdk-ink);
-}
-
-.cdk-button {
-  align-items: center;
-  background: linear-gradient(135deg, var(--cdk-primary) 0%, var(--cdk-secondary) 100%);
-  border-radius: 999px;
-  box-shadow: 0 10px 24px rgba(10, 110, 209, 0.24);
-  color: #fff;
-  display: inline-flex;
-  font-weight: 700;
-  justify-content: center;
-  min-height: 3rem;
-  padding: 0.75rem 1.25rem;
-  text-decoration: none;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-}
-
-.cdk-button:hover,
-.cdk-button:focus {
-  box-shadow: 0 16px 30px rgba(10, 110, 209, 0.28);
-  color: #fff;
-  transform: translateY(-1px);
-}
-
-@media screen and (min-width: 60em) {
-  .cdk-shell {
-    margin-top: -4rem;
+@media screen and (max-width: 40rem) {
+  .cdk-nav,
+  .cdk-footer__inner,
+  .cdk-home__inner {
+    width: calc(100% - 2rem);
   }
 
-  .cdk-grid {
-    gap: 2.5rem;
-    grid-template-columns: minmax(0, 1.6fr) minmax(18rem, 1fr);
-    padding: 3rem;
+  .cdk-nav__inner {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .cdk-home {
+    padding: 1.75rem 0 3rem;
+  }
+
+  .cdk-home__logo-frame {
+    max-width: 17rem;
+    width: 70vw;
+  }
+}
+
+@media screen and (min-width: 48rem) {
+  .cdk-home__claim {
+    font-size: 1.2rem;
   }
 }
