@@ -1,9 +1,8 @@
 ---
 title: Commerce DevKit - Open-Source SAP Commerce Development Tools
 description: >-
-  Open-source developer toolkit for SAP Commerce Cloud. Accelerate development
-  with plugins for Neovim, VS Code, and more. Free, fast, and built for modern
-  SAP Commerce developers.
+  The project aims to provide fast, open-source tooling for SAP Commerce
+  development across modern editors.
 keywords:
   - SAP Commerce
   - SAP Commerce Cloud
