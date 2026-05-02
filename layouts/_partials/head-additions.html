@@ -1,0 +1,139 @@
+{{- $title := cond .IsHome .Site.Title (printf "%s | %s" .Title .Site.Title) -}}
+{{- $description := .Description | default .Site.Params.description -}}
+{{- $keywordsRaw := .Params.keywords | default .Site.Params.keywords -}}
+{{- $keywords := "" -}}
+{{- if reflect.IsSlice $keywordsRaw -}}
+  {{- $clean := slice -}}
+  {{- range $keywordsRaw -}}
+    {{- $trimmed := strings.TrimSuffix "," . -}}
+    {{- $trimmed = strings.Trim $trimmed " " -}}
+    {{- if $trimmed -}}
+      {{- $clean = $clean | append $trimmed -}}
+    {{- end -}}
+  {{- end -}}
+  {{- $keywords = collections.Delimit $clean ", " -}}
+{{- else if $keywordsRaw -}}
+  {{- $keywords = $keywordsRaw -}}
+{{- end -}}
+{{- $image := "" -}}
+{{- if .Params.image -}}
+  {{- $image = .Params.image -}}
+{{- else if .Site.Params.images -}}
+  {{- $image = index .Site.Params.images 0 -}}
+{{- end -}}
+{{- $url := .Permalink -}}
+{{- $ogType := cond .IsHome "website" "article" -}}
+{{- $locale := .Site.Params.seo.og_locale | default "en_US" -}}
+{{- $twitterSite := .Site.Params.seo.twitter_site | default "" -}}
+{{- $twitterCreator := .Site.Params.seo.twitter_creator | default $twitterSite -}}
+{{- $github := .Site.Params.community.github -}}
+{{- $discord := .Site.Params.community.discord -}}
+{{- $youtube := .Site.Params.community.youtube -}}
+{{- $twitterURL := printf "https://twitter.com/%s" (strings.TrimPrefix "@" $twitterSite) -}}
+
+<meta name="keywords" content="{{ $keywords }}">
+<meta name="author" content="{{ .Site.Params.author }}">
+<meta name="generator" content="Hugo {{ hugo.Version }}">
+
+<meta name="theme-color" content="#ffffff">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="{{ .Site.Title }}">
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:type" content="{{ $ogType }}">
+<meta property="og:url" content="{{ $url }}">
+<meta property="og:locale" content="{{ $locale }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+{{ with $image }}
+<meta property="og:image" content="{{ . | absURL }}">
+{{ end }}
+
+{{ with $twitterSite }}
+<meta name="twitter:site" content="{{ . }}">
+{{ end }}
+{{ with $twitterCreator }}
+<meta name="twitter:creator" content="{{ . }}">
+{{ end }}
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+{{ with $image }}
+<meta name="twitter:image" content="{{ . | absURL }}">
+{{ end }}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{{ .Site.Title }}",
+  "url": "{{ .Site.BaseURL }}",
+  "description": "{{ $description }}",
+  "inLanguage": "{{ .Site.LanguageCode }}",
+  {{ if $twitterSite }}
+  "sameAs": [
+    "{{ $github }}",
+    "{{ $discord }}",
+    "{{ $youtube }}",
+    "{{ $twitterURL }}"
+  ]
+  {{ else }}
+  "sameAs": [
+    "{{ $github }}",
+    "{{ $discord }}",
+    "{{ $youtube }}"
+  ]
+  {{ end }}
+}
+</script>
+
+{{ if .IsHome }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "{{ .Site.Title }}",
+  "url": "{{ .Site.BaseURL }}",
+  "description": "{{ $description }}",
+  "logo": "{{ "logo.png" | absURL }}",
+  "sameAs": [
+    "{{ $github }}",
+    "{{ $discord }}",
+    "{{ $youtube }}"
+    {{ with $twitterURL }},
+    "{{ . }}"
+    {{ end }}
+  ],
+  "foundingDate": "2024",
+  "knowsAbout": ["SAP Commerce", "SAP Commerce Cloud", "SAP Hybris", "E-commerce Development", "Developer Tools"]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Commerce DevKit",
+  "operatingSystem": "Cross-platform",
+  "applicationCategory": "DeveloperApplication",
+  "description": "{{ $description }}",
+  "url": "{{ .Site.BaseURL }}",
+  "license": "https://opensource.org/licenses",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "Commerce DevKit Contributors",
+    "url": "{{ $github }}"
+  }
+}
+</script>
+{{ end }}
