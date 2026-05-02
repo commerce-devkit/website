@@ -7,11 +7,19 @@ disableKinds = ['taxonomy', 'term']
 copyright = 'Commerce DevKit'
 
 [params]
-description = 'The project aims to provide fast, open-source tooling for SAP Commerce development across modern editors.'
+description = 'Open-source developer toolkit for SAP Commerce Cloud. Accelerate development with plugins for Neovim, VS Code, and more.'
+keywords = 'SAP Commerce, SAP Commerce Cloud, SAP Hybris, developer tools, open source, Neovim, VS Code, IDE plugins, SAP Commerce development, devkit, e-commerce development, SAP development tools'
+author = 'Commerce DevKit Contributors'
+images = ['images/og-image.png']
 project_url = 'https://github.com/commerce-devkit'
 body_classes = 'commerce-devkit-site'
 custom_css = ['custom.css']
 favicon = 'favicon.svg'
+
+[params.seo]
+og_locale = 'en_US'
+twitter_site = '@CommerceDevKit'
+twitter_creator = '@CommerceDevKit'
 
 [params.community]
 github = 'https://github.com/commerce-devkit'
@@ -22,6 +30,11 @@ youtube = 'https://www.youtube.com/@CommerceDevKit'
 
 [social]
 twitter = 'CommerceDevKit'
+
+[sitemap]
+changefreq = 'monthly'
+priority = 0.5
+filename = 'sitemap.xml'
 
 [[menu.main]]
 identifier = 'home'
