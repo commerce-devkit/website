@@ -7,7 +7,7 @@ GitHub Pages.
 
 ## Requirements
 
-- Hugo Extended `0.148.2` or newer
+- Hugo Extended `0.160.0` or newer
 - Git submodules
 
 ## Local development
