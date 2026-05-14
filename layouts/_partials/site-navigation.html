@@ -41,19 +41,29 @@
               </button>
               <ul class="cdk-submenu" id="{{ $submenuID }}">
                 {{ range .Children }}
-                  {{ $target := .URL | relURL }}
+                  {{ $isExternal := or (hasPrefix .URL "http://") (hasPrefix .URL "https://") }}
+                  {{ $target := cond $isExternal (.URL | safeURL) (.URL | relURL) }}
                   {{ $isActive := or (eq $target $current) (and (ne $target "/") (hasPrefix $current $target)) }}
                   <li>
-                    <a href="{{ $target }}"{{ if $isActive }} aria-current="page"{{ end }}>{{ .Name }}</a>
+                    <a
+                      href="{{ $target }}"
+                      {{ with .Params.target }}target="{{ . }}"{{ end }}
+                      {{ with .Params.rel }}rel="{{ . }}"{{ end }}
+                      {{ if $isActive }}aria-current="page"{{ end }}>{{ .Name }}</a>
                   </li>
                 {{ end }}
               </ul>
             </li>
           {{ else }}
-            {{ $target := .URL | relURL }}
+            {{ $isExternal := or (hasPrefix .URL "http://") (hasPrefix .URL "https://") }}
+            {{ $target := cond $isExternal (.URL | safeURL) (.URL | relURL) }}
             {{ $isActive := or (eq $target $current) (and (ne $target "/") (hasPrefix $current $target)) }}
             <li class="cdk-menu__item">
-              <a href="{{ $target }}"{{ if $isActive }} aria-current="page"{{ end }}>{{ .Name }}</a>
+              <a
+                href="{{ $target }}"
+                {{ with .Params.target }}target="{{ . }}"{{ end }}
+                {{ with .Params.rel }}rel="{{ . }}"{{ end }}
+                {{ if $isActive }}aria-current="page"{{ end }}>{{ .Name }}</a>
             </li>
           {{ end }}
         {{ end }}

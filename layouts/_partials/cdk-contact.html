@@ -1,0 +1,28 @@
+{{ $community := site.Params.community }} {{ $ircWebchat := "https://web.libera.chat/#commerce-devkit" }}
+<ul class="cdk-contact-list">
+  {{ with $community.github }}
+  <li>
+    <a href="{{ . | safeURL }}" target="_blank" rel="noopener noreferrer">GitHub</a>
+  </li>
+  {{ end }}
+  {{ with $community.discord }}
+  <li>
+    <a href="{{ . | safeURL }}" target="_blank" rel="noopener noreferrer">Discord</a>
+  </li>
+  {{ end }}
+  {{ with $community.irc }}
+  <li>
+    Join <strong><code>#commerce-devkit</code></strong> on <strong>irc.libera.chat</strong> with an <a href="{{ . | safeURL }}">IRC client</a>  or use <a href="{{ $ircWebchat }}">Libera.Chat webchat</a>.
+  </li>
+  {{ end }}
+  {{ with $community.twitter }}
+  <li>
+    <a href="{{ . | safeURL }}" target="_blank" rel="noopener noreferrer">Twitter</a>
+  </li>
+  {{ end }}
+  {{ with $community.youtube }}
+  <li>
+    <a href="{{ . | safeURL }}" target="_blank" rel="noopener noreferrer">YouTube</a>
+  </li>
+  {{ end }}
+</ul>

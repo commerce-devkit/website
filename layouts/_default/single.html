@@ -9,6 +9,9 @@
     <article class="cdk-page__article">
       <div class="cdk-page__content">
         {{ .Content }}
+        {{ if .Params.render_contact_points }}
+          {{ partials.Include "cdk-contact.html" . }}
+        {{ end }}
       </div>
     </article>
   </section>
