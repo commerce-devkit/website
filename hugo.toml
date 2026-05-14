@@ -56,10 +56,16 @@ parent = 'about'
 weight = 2
 
 [[menu.main]]
+identifier = 'discord'
+name = 'Discord'
+url = 'https://discord.gg/jF9r3Qq9KY'
+weight = 2
+
+[[menu.main]]
 identifier = 'development'
 name = 'Development'
 url = 'https://github.com/commerce-devkit'
-weight = 2
+weight = 3
 
 [menu.main.params]
 target = '_blank'
