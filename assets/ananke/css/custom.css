@@ -92,7 +92,7 @@ body.commerce-devkit-site {
   appearance: none;
   background: transparent;
   border: 0;
-  color: var(--cdk-muted);
+  color: var(--cdk-text);
   cursor: pointer;
   display: inline-flex;
   font: inherit;
@@ -143,6 +143,7 @@ body.commerce-devkit-site {
 .cdk-menu a,
 .cdk-menu__trigger {
   border-bottom: 2px solid transparent;
+  color: var(--cdk-text);
   display: inline-flex;
   font-size: 0.95rem;
   font-weight: 500;
