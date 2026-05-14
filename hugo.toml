@@ -37,7 +37,13 @@ priority = 0.5
 filename = 'sitemap.xml'
 
 [[menu.main]]
-identifier = 'home'
-name = 'Home'
-url = '/'
+identifier = 'about'
+name = 'About'
+weight = 1
+
+[[menu.main]]
+identifier = 'vision'
+name = 'Vision'
+pageRef = '/about/vision'
+parent = 'about'
 weight = 1

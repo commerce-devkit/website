@@ -33,11 +33,17 @@ body.commerce-devkit-site {
   text-rendering: optimizeLegibility;
 }
 
-.commerce-devkit-site main {
+.commerce-devkit-site.is-home main {
   align-items: center;
   display: flex;
   flex: 1;
   justify-content: center;
+  padding-bottom: 0;
+}
+
+.commerce-devkit-site:not(.is-home) main {
+  display: block;
+  flex: 1;
   padding-bottom: 0;
 }
 
@@ -64,6 +70,7 @@ body.commerce-devkit-site {
   display: flex;
   gap: 1rem;
   justify-content: space-between;
+  position: relative;
 }
 
 .cdk-brand {
@@ -79,6 +86,43 @@ body.commerce-devkit-site {
   color: var(--cdk-link-hover);
 }
 
+.cdk-nav__toggle,
+.cdk-menu__trigger {
+  align-items: center;
+  appearance: none;
+  background: transparent;
+  border: 0;
+  color: var(--cdk-muted);
+  cursor: pointer;
+  display: inline-flex;
+  font: inherit;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0.2rem 0;
+}
+
+.cdk-nav__toggle {
+  display: none;
+}
+
+.cdk-nav__toggle-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.cdk-nav__toggle-icon {
+  display: inline-grid;
+  gap: 0.22rem;
+}
+
+.cdk-nav__toggle-icon span {
+  background: currentColor;
+  border-radius: 999px;
+  display: block;
+  height: 2px;
+  width: 1.1rem;
+}
+
 .cdk-menu {
   display: flex;
   gap: 1rem;
@@ -87,9 +131,18 @@ body.commerce-devkit-site {
   padding: 0;
 }
 
-.cdk-menu a {
+.cdk-menu[hidden],
+.cdk-submenu[hidden] {
+  display: none !important;
+}
+
+.cdk-menu__item {
+  position: relative;
+}
+
+.cdk-menu a,
+.cdk-menu__trigger {
   border-bottom: 2px solid transparent;
-  color: var(--cdk-muted);
   display: inline-flex;
   font-size: 0.95rem;
   font-weight: 500;
@@ -102,8 +155,54 @@ body.commerce-devkit-site {
 
 .cdk-menu a:hover,
 .cdk-menu a:focus-visible,
+.cdk-menu__trigger:hover,
+.cdk-menu__trigger:focus-visible,
+.cdk-menu__trigger[aria-expanded="true"],
+.cdk-menu__trigger.is-active,
 .cdk-menu a[aria-current="page"] {
   border-color: var(--cdk-link);
+  color: var(--cdk-text);
+}
+
+.cdk-menu__chevron {
+  fill: currentColor;
+  height: 1rem;
+  transition: transform 0.18s ease;
+  width: 1rem;
+}
+
+.cdk-menu__item--has-children.is-open .cdk-menu__chevron {
+  transform: rotate(180deg);
+}
+
+.cdk-submenu {
+  background: var(--cdk-surface-strong);
+  border: 1px solid var(--cdk-border);
+  border-radius: 0.9rem;
+  box-shadow: var(--cdk-shadow);
+  display: grid;
+  gap: 0.2rem;
+  list-style: none;
+  margin: 0.75rem 0 0;
+  min-width: 12rem;
+  padding: 0.55rem;
+  position: absolute;
+  right: 0;
+  top: 100%;
+}
+
+.cdk-submenu a {
+  border-bottom: 0;
+  border-radius: 0.6rem;
+  color: var(--cdk-muted);
+  display: block;
+  padding: 0.6rem 0.75rem;
+}
+
+.cdk-submenu a:hover,
+.cdk-submenu a:focus-visible,
+.cdk-submenu a[aria-current="page"] {
+  background: rgba(56, 189, 248, 0.14);
   color: var(--cdk-text);
 }
 
@@ -181,6 +280,95 @@ body.commerce-devkit-site {
   width: 1.8rem;
 }
 
+.cdk-page {
+  padding: 2.5rem 0 4rem;
+  width: 100%;
+}
+
+.cdk-page__article {
+  background: var(--cdk-surface);
+  border: 1px solid var(--cdk-border);
+  border-radius: 1.5rem;
+  box-shadow: var(--cdk-shadow);
+  margin: 0 auto;
+  max-width: 56rem;
+  padding: clamp(1.5rem, 3vw, 3rem);
+  width: calc(100% - 3rem);
+}
+
+.cdk-page__header {
+  margin-bottom: 2rem;
+}
+
+.cdk-page__header h1 {
+  color: var(--cdk-text);
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.cdk-page__description {
+  color: var(--cdk-muted);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin: 1rem 0 0;
+  max-width: 42rem;
+}
+
+.cdk-page__content {
+  color: var(--cdk-text);
+  line-height: 1.75;
+}
+
+.cdk-page__content > :first-child {
+  margin-top: 0;
+}
+
+.cdk-page__content > :last-child {
+  margin-bottom: 0;
+}
+
+.cdk-page__content h2,
+.cdk-page__content h3,
+.cdk-page__content h4 {
+  color: var(--cdk-text);
+  letter-spacing: -0.02em;
+  margin-top: 2rem;
+}
+
+.cdk-page__content p,
+.cdk-page__content ul,
+.cdk-page__content ol,
+.cdk-page__content blockquote {
+  margin: 1rem 0;
+}
+
+.cdk-page__content ul,
+.cdk-page__content ol {
+  padding-left: 1.5rem;
+}
+
+.cdk-page__content li + li {
+  margin-top: 0.45rem;
+}
+
+.cdk-page__content a {
+  color: var(--cdk-link);
+}
+
+.cdk-page__content a:hover,
+.cdk-page__content a:focus-visible {
+  color: var(--cdk-link-hover);
+}
+
+.cdk-page__content blockquote {
+  border-left: 4px solid var(--cdk-link);
+  color: var(--cdk-text);
+  margin-left: 0;
+  padding-left: 1rem;
+}
+
 .cdk-footer {
   padding: 0 0 1.5rem;
 }
@@ -215,13 +403,46 @@ a:focus-visible {
 @media screen and (max-width: 40rem) {
   .cdk-nav,
   .cdk-footer__inner,
-  .cdk-home__inner {
+  .cdk-home__inner,
+  .cdk-page__article {
     width: calc(100% - 2rem);
   }
 
   .cdk-nav__inner {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .cdk-nav.is-enhanced .cdk-nav__inner {
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .cdk-nav.is-enhanced .cdk-nav__toggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .cdk-nav.is-enhanced .cdk-menu {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    width: 100%;
+  }
+
+  .cdk-nav.is-enhanced .cdk-menu__item,
+  .cdk-nav.is-enhanced .cdk-menu__trigger {
+    width: 100%;
+  }
+
+  .cdk-nav.is-enhanced .cdk-menu__trigger {
+    justify-content: space-between;
+  }
+
+  .cdk-nav.is-enhanced .cdk-submenu {
+    margin-top: 0.5rem;
+    position: static;
   }
 
   .cdk-home {
@@ -231,6 +452,10 @@ a:focus-visible {
   .cdk-home__logo-frame {
     max-width: 17rem;
     width: 70vw;
+  }
+
+  .cdk-page {
+    padding: 1.75rem 0 3rem;
   }
 }
 
