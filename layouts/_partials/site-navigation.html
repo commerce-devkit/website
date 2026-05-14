@@ -46,10 +46,14 @@
                   {{ $isActive := or (eq $target $current) (and (ne $target "/") (hasPrefix $current $target)) }}
                   <li>
                     <a
+                      {{ if $isExternal }}class="cdk-menu__link--external"{{ end }}
                       href="{{ $target }}"
                       {{ with .Params.target }}target="{{ . }}"{{ end }}
                       {{ with .Params.rel }}rel="{{ . }}"{{ end }}
-                      {{ if $isActive }}aria-current="page"{{ end }}>{{ .Name }}</a>
+                      {{ if $isActive }}aria-current="page"{{ end }}>
+                      <span>{{ .Name }}</span>
+                      {{ if $isExternal }}{{ partials.Include "cdk-external-link-icon.html" . }}{{ end }}
+                    </a>
                   </li>
                 {{ end }}
               </ul>
@@ -60,10 +64,14 @@
             {{ $isActive := or (eq $target $current) (and (ne $target "/") (hasPrefix $current $target)) }}
             <li class="cdk-menu__item">
               <a
+                {{ if $isExternal }}class="cdk-menu__link--external"{{ end }}
                 href="{{ $target }}"
                 {{ with .Params.target }}target="{{ . }}"{{ end }}
                 {{ with .Params.rel }}rel="{{ . }}"{{ end }}
-                {{ if $isActive }}aria-current="page"{{ end }}>{{ .Name }}</a>
+                {{ if $isActive }}aria-current="page"{{ end }}>
+                <span>{{ .Name }}</span>
+                {{ if $isExternal }}{{ partials.Include "cdk-external-link-icon.html" . }}{{ end }}
+              </a>
             </li>
           {{ end }}
         {{ end }}

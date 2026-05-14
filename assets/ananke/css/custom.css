@@ -154,6 +154,34 @@ body.commerce-devkit-site {
     border-color 0.18s ease;
 }
 
+.cdk-menu__link--external {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.28rem;
+}
+
+.cdk-menu__external-icon {
+  fill: none;
+  flex: none;
+  height: 0.95rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2;
+  width: 0.95rem;
+}
+
+.cdk-menu__external-icon path {
+  transition:
+    transform 0.1s ease-in-out,
+    opacity 0.18s ease;
+}
+
+.cdk-menu__link--external:hover .cdk-menu__external-icon path:not(:first-of-type),
+.cdk-menu__link--external:focus-visible .cdk-menu__external-icon path:not(:first-of-type) {
+  transform: translate(2px, -2px);
+}
+
 .cdk-menu a:hover,
 .cdk-menu a:focus-visible,
 .cdk-menu__trigger:hover,
@@ -198,6 +226,12 @@ body.commerce-devkit-site {
   color: var(--cdk-muted);
   display: block;
   padding: 0.6rem 0.75rem;
+}
+
+.cdk-submenu a.cdk-menu__link--external {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .cdk-submenu a:hover,
