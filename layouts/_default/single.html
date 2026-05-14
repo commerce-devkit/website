@@ -1,0 +1,15 @@
+{{ define "header" }}
+  <header class="cdk-header">
+    {{ partials.Include "site-navigation.html" . }}
+  </header>
+{{ end }}
+
+{{ define "main" }}
+  <section class="cdk-page">
+    <article class="cdk-page__article">
+      <div class="cdk-page__content">
+        {{ .Content }}
+      </div>
+    </article>
+  </section>
+{{ end }}

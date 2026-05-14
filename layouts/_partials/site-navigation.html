@@ -1,16 +1,144 @@
-<nav class="cdk-nav" aria-label="Primary">
+<nav class="cdk-nav" aria-label="Primary" data-cdk-nav>
   <div class="cdk-nav__inner">
     <a class="cdk-brand" href="{{ .Site.Home.RelPermalink }}">{{ .Site.Title }}</a>
     {{ with .Site.Menus.main }}
-      <ul class="cdk-menu">
+      <button
+        class="cdk-nav__toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="cdk-menu-list"
+        data-cdk-nav-toggle>
+        <span class="cdk-nav__toggle-label">Menu</span>
+        <span class="cdk-nav__toggle-icon" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </button>
+      <ul class="cdk-menu" id="cdk-menu-list" data-cdk-menu>
+        {{ $current := $.RelPermalink }}
         {{ range . }}
-          {{ $target := .URL | relURL }}
-          {{ $isActive := eq $target $.RelPermalink }}
-          <li>
-            <a href="{{ $target }}"{{ if $isActive }} aria-current="page"{{ end }}>{{ .Name }}</a>
-          </li>
+          {{ if .HasChildren }}
+            {{ $submenuID := printf "cdk-submenu-%s" (anchorize (or .Identifier .Name)) }}
+            {{ $childActive := false }}
+            {{ range .Children }}
+              {{ $childTarget := .URL | relURL }}
+              {{ if or (eq $childTarget $current) (and (ne $childTarget "/") (hasPrefix $current $childTarget)) }}
+                {{ $childActive = true }}
+              {{ end }}
+            {{ end }}
+            <li class="cdk-menu__item cdk-menu__item--has-children{{ if $childActive }} is-open{{ end }}" data-cdk-submenu>
+              <button
+                class="cdk-menu__trigger{{ if $childActive }} is-active{{ end }}"
+                type="button"
+                aria-expanded="{{ if $childActive }}true{{ else }}false{{ end }}"
+                aria-controls="{{ $submenuID }}"
+                data-cdk-submenu-button>
+                <span>{{ .Name }}</span>
+                <svg class="cdk-menu__chevron" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+                  <path d="M4.22 5.97a.75.75 0 0 1 1.06 0L8 8.69l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.03a.75.75 0 0 1 0-1.06Z"></path>
+                </svg>
+              </button>
+              <ul class="cdk-submenu" id="{{ $submenuID }}">
+                {{ range .Children }}
+                  {{ $target := .URL | relURL }}
+                  {{ $isActive := or (eq $target $current) (and (ne $target "/") (hasPrefix $current $target)) }}
+                  <li>
+                    <a href="{{ $target }}"{{ if $isActive }} aria-current="page"{{ end }}>{{ .Name }}</a>
+                  </li>
+                {{ end }}
+              </ul>
+            </li>
+          {{ else }}
+            {{ $target := .URL | relURL }}
+            {{ $isActive := or (eq $target $current) (and (ne $target "/") (hasPrefix $current $target)) }}
+            <li class="cdk-menu__item">
+              <a href="{{ $target }}"{{ if $isActive }} aria-current="page"{{ end }}>{{ .Name }}</a>
+            </li>
+          {{ end }}
         {{ end }}
       </ul>
     {{ end }}
   </div>
 </nav>
+
+<script>
+  (() => {
+    const nav = document.querySelector("[data-cdk-nav]");
+    if (!nav) {
+      return;
+    }
+
+    nav.classList.add("is-enhanced");
+
+    const mobileQuery = window.matchMedia("(max-width: 40rem)");
+    const menu = nav.querySelector("[data-cdk-menu]");
+    const menuToggle = nav.querySelector("[data-cdk-nav-toggle]");
+    const submenuButtons = Array.from(
+      nav.querySelectorAll("[data-cdk-submenu-button]")
+    );
+
+    const setSubmenuState = (button, open) => {
+      const panel = document.getElementById(button.getAttribute("aria-controls"));
+      if (!panel) {
+        return;
+      }
+
+      button.setAttribute("aria-expanded", String(open));
+      panel.hidden = !open;
+      button.closest("[data-cdk-submenu]")?.classList.toggle("is-open", open);
+    };
+
+    const closeOtherSubmenus = (activeButton) => {
+      submenuButtons.forEach((button) => {
+        if (button !== activeButton) {
+          setSubmenuState(button, false);
+        }
+      });
+    };
+
+    const syncMenuState = () => {
+      if (!menu || !menuToggle) {
+        return;
+      }
+
+      if (mobileQuery.matches) {
+        const open = menuToggle.getAttribute("aria-expanded") === "true";
+        menu.hidden = !open;
+        nav.classList.toggle("is-menu-open", open);
+      } else {
+        menu.hidden = false;
+        menuToggle.setAttribute("aria-expanded", "false");
+        nav.classList.remove("is-menu-open");
+      }
+    };
+
+    submenuButtons.forEach((button) => {
+      const open = button.getAttribute("aria-expanded") === "true";
+      setSubmenuState(button, open);
+      button.addEventListener("click", () => {
+        const isOpen = button.getAttribute("aria-expanded") === "true";
+        if (!isOpen) {
+          closeOtherSubmenus(button);
+        }
+        setSubmenuState(button, !isOpen);
+      });
+    });
+
+    if (menu && menuToggle) {
+      menuToggle.addEventListener("click", () => {
+        const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!isOpen));
+        syncMenuState();
+      });
+
+      syncMenuState();
+
+      if (typeof mobileQuery.addEventListener === "function") {
+        mobileQuery.addEventListener("change", syncMenuState);
+      } else if (typeof mobileQuery.addListener === "function") {
+        mobileQuery.addListener(syncMenuState);
+      }
+    }
+  })();
+</script>
