@@ -27,11 +27,11 @@
                 {{ $childActive = true }}
               {{ end }}
             {{ end }}
-            <li class="cdk-menu__item cdk-menu__item--has-children{{ if $childActive }} is-open{{ end }}" data-cdk-submenu>
+            <li class="cdk-menu__item cdk-menu__item--has-children" data-cdk-submenu>
               <button
                 class="cdk-menu__trigger{{ if $childActive }} is-active{{ end }}"
                 type="button"
-                aria-expanded="{{ if $childActive }}true{{ else }}false{{ end }}"
+                aria-expanded="false"
                 aria-controls="{{ $submenuID }}"
                 data-cdk-submenu-button>
                 <span>{{ .Name }}</span>
