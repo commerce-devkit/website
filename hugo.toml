@@ -13,8 +13,10 @@ author = 'Commerce DevKit Contributors'
 images = ['images/og-image.png']
 project_url = 'https://github.com/commerce-devkit'
 body_classes = 'commerce-devkit-site'
-custom_css = ['custom.css']
 favicon = 'favicon.svg'
+
+[params.ananke]
+custom_css = ['custom.css']
 
 [params.seo]
 og_locale = 'en_US'
