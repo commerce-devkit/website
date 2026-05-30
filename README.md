@@ -32,6 +32,34 @@ GitHub Pages.
 hugo --gc --minify
 ```
 
+## Adding news posts
+
+Create news posts with the dedicated archetype and a date-prefixed filename:
+
+```bash
+hugo new --kind news content/news/2026-05-30-my-update.md
+```
+
+Guidelines:
+
+1. Use the `YYYY-MM-DD-slug.md` filename pattern so News stays chronologically scannable in the repository.
+2. Keep the first paragraph or `summary` concise because it is reused in News listings and metadata.
+3. Add `tags` when they will help future filtering or tag-cloud navigation.
+
+Example front matter:
+
+```yaml
+---
+title: "My update"
+date: 2026-05-30T10:00:00+02:00
+draft: false
+summary: "One-sentence summary for listings and metadata."
+tags:
+  - release
+  - website
+---
+```
+
 ## Deployment
 
 Pushes to `main` deploy through GitHub Actions to GitHub Pages. The custom

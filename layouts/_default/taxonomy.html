@@ -1,0 +1,108 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "header" }}
+  <header class="cdk-header">
+    {{ partials.Include "site-navigation.html" . }}
+  </header>
+{{ end }}
+
+{{ define "main" }}
+  {{ $pageSize := .Site.Params.news_page_size | default 5 }}
+  {{ $paginator := .Paginate (.Pages.ByDate.Reverse) $pageSize }}
+  <section class="cdk-page cdk-taxonomy">
+    <div class="cdk-page__article cdk-taxonomy__shell">
+      <header class="cdk-page__header cdk-news__header">
+        <p class="cdk-news-article__eyebrow">
+          <a href="/tags/">Tags</a>
+        </p>
+        <h1>{{ .Title }}</h1>
+        <p class="cdk-page__description">All content tagged with <strong>{{ .Title }}</strong>.</p>
+      </header>
+
+      {{ if gt (len $paginator.Pages) 0 }}
+        <ol class="cdk-news__list">
+          {{ range $paginator.Pages }}
+            <li class="cdk-news__item">
+              <article>
+                {{ if not .Date.IsZero }}
+                  <time
+                    class="cdk-news__meta"
+                    {{ printf `datetime="%s"` (.Date.Format "2006-01-02T15:04:05Z07:00") | safeHTMLAttr }}>
+                    {{ .Date | time.Format (compare.Default "January 2, 2006" .Site.Params.date_format) }}
+                  </time>
+                {{ end }}
+                <h2 class="cdk-news__title">
+                  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </h2>
+                {{ $summary := .Description | default .Summary }}
+                {{ with $summary }}
+                  <div class="cdk-news__summary">
+                    {{ . | markdownify }}
+                  </div>
+                {{ end }}
+                {{ partials.Include "news-tags.html" (dict "page" . "class" "cdk-news-tags cdk-news-tags--compact") }}
+              </article>
+            </li>
+          {{ end }}
+        </ol>
+      {{ else }}
+        <p class="cdk-taxonomy__empty">No content uses this tag yet.</p>
+      {{ end }}
+
+      {{ if gt $paginator.TotalPages 1 }}
+        <nav class="cdk-news__pagination" aria-label="Tagged content pagination">
+          <div class="cdk-news__pagination-cell">
+            {{ with $paginator.Prev }}
+              <a class="cdk-news__pagination-link" href="{{ .URL }}">
+                <span class="cdk-news__pagination-copy">
+                  <span class="cdk-news__pagination-label">Newer items</span>
+                  <span class="cdk-news__pagination-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M15 5 8 12l7 7" />
+                    </svg>
+                  </span>
+                </span>
+              </a>
+            {{ else }}
+              <span class="cdk-news__pagination-link cdk-news__pagination-link--disabled" aria-hidden="true">
+                <span class="cdk-news__pagination-copy">
+                  <span class="cdk-news__pagination-label">Newer items</span>
+                  <span class="cdk-news__pagination-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M15 5 8 12l7 7" />
+                    </svg>
+                  </span>
+                </span>
+              </span>
+            {{ end }}
+          </div>
+          <div class="cdk-news__pagination-cell">
+            {{ with $paginator.Next }}
+              <a class="cdk-news__pagination-link" href="{{ .URL }}">
+                <span class="cdk-news__pagination-copy">
+                  <span class="cdk-news__pagination-label">Older items</span>
+                  <span class="cdk-news__pagination-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="m9 5 7 7-7 7" />
+                    </svg>
+                  </span>
+                </span>
+              </a>
+            {{ else }}
+              <span class="cdk-news__pagination-link cdk-news__pagination-link--disabled" aria-hidden="true">
+                <span class="cdk-news__pagination-copy">
+                  <span class="cdk-news__pagination-label">Older items</span>
+                  <span class="cdk-news__pagination-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="m9 5 7 7-7 7" />
+                    </svg>
+                  </span>
+                </span>
+              </span>
+            {{ end }}
+          </div>
+        </nav>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

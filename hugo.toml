@@ -3,7 +3,6 @@ languageCode = 'en-us'
 title = 'Commerce DevKit'
 theme = 'ananke'
 enableRobotsTXT = true
-disableKinds = ['taxonomy', 'term']
 copyright = 'Commerce DevKit'
 
 [params]
@@ -14,6 +13,7 @@ images = ['images/og-image.png']
 project_url = 'https://github.com/commerce-devkit'
 body_classes = 'commerce-devkit-site'
 favicon = 'favicon.svg'
+news_page_size = 5
 
 [params.ananke]
 custom_css = ['custom.css']
@@ -38,6 +38,9 @@ changefreq = 'monthly'
 priority = 0.5
 filename = 'sitemap.xml'
 
+[taxonomies]
+tag = 'tags'
+
 [[menu.main]]
 identifier = 'about'
 name = 'About'
@@ -58,16 +61,22 @@ parent = 'about'
 weight = 2
 
 [[menu.main]]
+identifier = 'news'
+name = 'News'
+pageRef = '/news'
+weight = 2
+
+[[menu.main]]
 identifier = 'discord'
 name = 'Discord'
 url = 'https://discord.gg/jF9r3Qq9KY'
-weight = 2
+weight = 3
 
 [[menu.main]]
 identifier = 'development'
 name = 'Development'
 url = 'https://github.com/commerce-devkit'
-weight = 3
+weight = 4
 
 [menu.main.params]
 target = '_blank'
