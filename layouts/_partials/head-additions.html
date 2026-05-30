@@ -1,20 +1,33 @@
 {{- $title := cond .IsHome .Site.Title (printf "%s | %s" .Title .Site.Title) -}}
-{{- $description := .Description | default .Site.Params.description -}}
+{{- $description := .Description | default .Summary | default .Site.Params.description -}}
 {{- $keywordsRaw := .Params.keywords | default .Site.Params.keywords -}}
-{{- $keywords := "" -}}
+{{- $keywordValues := slice -}}
 {{- if reflect.IsSlice $keywordsRaw -}}
-  {{- $clean := slice -}}
   {{- range $keywordsRaw -}}
     {{- $trimmed := strings.TrimSuffix "," . -}}
     {{- $trimmed = strings.Trim $trimmed " " -}}
     {{- if $trimmed -}}
-      {{- $clean = $clean | append $trimmed -}}
+      {{- $keywordValues = $keywordValues | append $trimmed -}}
     {{- end -}}
   {{- end -}}
-  {{- $keywords = collections.Delimit $clean ", " -}}
 {{- else if $keywordsRaw -}}
-  {{- $keywords = $keywordsRaw -}}
+  {{- range split $keywordsRaw "," -}}
+    {{- $trimmed := strings.Trim . " " -}}
+    {{- if $trimmed -}}
+      {{- $keywordValues = $keywordValues | append $trimmed -}}
+    {{- end -}}
+  {{- end -}}
 {{- end -}}
+{{- with .Params.tags -}}
+  {{- range . -}}
+    {{- $trimmed := strings.Trim . " " -}}
+    {{- if $trimmed -}}
+      {{- $keywordValues = $keywordValues | append $trimmed -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $keywordValues = collections.Uniq $keywordValues -}}
+{{- $keywords := collections.Delimit $keywordValues ", " -}}
 {{- $image := "" -}}
 {{- if .Params.image -}}
   {{- $image = .Params.image -}}
@@ -22,7 +35,7 @@
   {{- $image = index .Site.Params.images 0 -}}
 {{- end -}}
 {{- $url := .Permalink -}}
-{{- $ogType := cond .IsHome "website" "article" -}}
+{{- $ogType := cond .IsPage "article" "website" -}}
 {{- $locale := .Site.Params.seo.og_locale | default "en_US" -}}
 {{- $twitterSite := .Site.Params.seo.twitter_site | default "" -}}
 {{- $twitterCreator := .Site.Params.seo.twitter_creator | default $twitterSite -}}
@@ -50,7 +63,6 @@
 {{ with $image }}
 <meta property="og:image" content="{{ . | absURL }}">
 {{ end }}
-
 {{ with $twitterSite }}
 <meta name="twitter:site" content="{{ . }}">
 {{ end }}
@@ -91,6 +103,31 @@
   {{ end }}
 }
 </script>
+
+{{ if and .IsPage (eq .Section "news") }}
+  {{- $newsSchema := dict
+    "@context" "https://schema.org"
+    "@type" "BlogPosting"
+    "headline" .Title
+    "url" $url
+    "mainEntityOfPage" $url
+    "description" $description
+    "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")
+    "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")
+    "articleSection" "News"
+    "author" (dict "@type" "Organization" "name" .Site.Params.author)
+    "publisher" (dict "@type" "Organization" "name" .Site.Title "url" .Site.BaseURL)
+  -}}
+  {{- if $keywordValues -}}
+    {{- $newsSchema = merge $newsSchema (dict "keywords" $keywordValues) -}}
+  {{- end -}}
+  {{- with $image -}}
+    {{- $newsSchema = merge $newsSchema (dict "image" (. | absURL)) -}}
+  {{- end -}}
+<script type="application/ld+json">
+{{ $newsSchema | jsonify | safeJS }}
+</script>
+{{ end }}
 
 {{ if .IsHome }}
 <script type="application/ld+json">

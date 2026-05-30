@@ -1,0 +1,137 @@
+{{ define "header" }}
+  <header class="cdk-header">
+    {{ partials.Include "site-navigation.html" . }}
+  </header>
+{{ end }}
+
+{{ define "main" }}
+  {{ $pages := .RegularPages.ByDate.Reverse }}
+  {{ $pageSize := .Site.Params.news_page_size | default 5 }}
+  {{ $paginator := .Paginate $pages $pageSize }}
+  {{ $tags := .Site.Taxonomies.tags.Alphabetical }}
+  <section class="cdk-page cdk-news">
+    <div class="cdk-page__article cdk-news__shell">
+      <header class="cdk-page__header cdk-news__header">
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}
+          <p class="cdk-page__description">{{ . }}</p>
+        {{ end }}
+      </header>
+
+      {{ with .Content }}
+        <div class="cdk-page__content cdk-news__intro">
+          {{ . }}
+        </div>
+      {{ end }}
+
+      {{ if gt (len $tags) 0 }}
+        <section class="cdk-news__tag-nav" aria-labelledby="news-tags-title">
+          <div class="cdk-news__tag-nav-header">
+            <h2 id="news-tags-title">Browse by tag</h2>
+            <a class="cdk-news__tag-nav-link" href="/tags/">All tags</a>
+          </div>
+          <ul class="cdk-tag-index">
+            {{ range $tags }}
+              <li>
+                <a class="cdk-tag-index__link" href="{{ .Page.RelPermalink }}">
+                  <span>{{ .Page.LinkTitle }}</span>
+                  <span class="cdk-tag-index__count">{{ .Count }}</span>
+                </a>
+              </li>
+            {{ end }}
+          </ul>
+        </section>
+      {{ end }}
+
+      {{ if gt (len $paginator.Pages) 0 }}
+        <ol class="cdk-news__list">
+          {{ range $paginator.Pages }}
+            <li class="cdk-news__item">
+              <article>
+                {{ if not .Date.IsZero }}
+                  <time
+                    class="cdk-news__meta"
+                    {{ printf `datetime="%s"` (.Date.Format "2006-01-02T15:04:05Z07:00") | safeHTMLAttr }}>
+                    {{ .Date | time.Format (compare.Default "January 2, 2006" .Site.Params.date_format) }}
+                  </time>
+                {{ end }}
+                <h2 class="cdk-news__title">
+                  <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                </h2>
+                {{ $summary := .Description | default .Summary }}
+                {{ with $summary }}
+                  <div class="cdk-news__summary">
+                    {{ . | markdownify }}
+                  </div>
+                {{ end }}
+                {{ partials.Include "news-tags.html" (dict "page" . "class" "cdk-news-tags cdk-news-tags--compact") }}
+                <p class="cdk-news__action">
+                  <a href="{{ .RelPermalink }}">Read more</a>
+                </p>
+              </article>
+            </li>
+          {{ end }}
+        </ol>
+      {{ else }}
+        <div class="cdk-news__empty">
+          <p>No news has been published yet. Check back soon for project updates and release announcements.</p>
+        </div>
+      {{ end }}
+
+      {{ if gt $paginator.TotalPages 1 }}
+        <nav class="cdk-news__pagination" aria-label="News pagination">
+          <div class="cdk-news__pagination-cell">
+            {{ with $paginator.Prev }}
+              <a class="cdk-news__pagination-link" href="{{ .URL }}">
+                <span class="cdk-news__pagination-copy">
+                  <span class="cdk-news__pagination-label">Newer news</span>
+                  <span class="cdk-news__pagination-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M15 5 8 12l7 7" />
+                    </svg>
+                  </span>
+                </span>
+              </a>
+            {{ else }}
+              <span class="cdk-news__pagination-link cdk-news__pagination-link--disabled" aria-hidden="true">
+                <span class="cdk-news__pagination-copy">
+                  <span class="cdk-news__pagination-label">Newer news</span>
+                  <span class="cdk-news__pagination-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="M15 5 8 12l7 7" />
+                    </svg>
+                  </span>
+                </span>
+              </span>
+            {{ end }}
+          </div>
+          <div class="cdk-news__pagination-cell">
+            {{ with $paginator.Next }}
+              <a class="cdk-news__pagination-link" href="{{ .URL }}">
+                <span class="cdk-news__pagination-copy">
+                  <span class="cdk-news__pagination-label">Older news</span>
+                  <span class="cdk-news__pagination-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="m9 5 7 7-7 7" />
+                    </svg>
+                  </span>
+                </span>
+              </a>
+            {{ else }}
+              <span class="cdk-news__pagination-link cdk-news__pagination-link--disabled" aria-hidden="true">
+                <span class="cdk-news__pagination-copy">
+                  <span class="cdk-news__pagination-label">Older news</span>
+                  <span class="cdk-news__pagination-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false">
+                      <path d="m9 5 7 7-7 7" />
+                    </svg>
+                  </span>
+                </span>
+              </span>
+            {{ end }}
+          </div>
+        </nav>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

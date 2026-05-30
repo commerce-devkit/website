@@ -1,0 +1,33 @@
+{{ define "title" }}{{ .Title }} | {{ .Site.Title }}{{ end }}
+
+{{ define "header" }}
+  <header class="cdk-header">
+    {{ partials.Include "site-navigation.html" . }}
+  </header>
+{{ end }}
+
+{{ define "main" }}
+  <section class="cdk-page cdk-taxonomy">
+    <div class="cdk-page__article cdk-taxonomy__shell">
+      <header class="cdk-page__header cdk-news__header">
+        <h1>{{ .Title }}</h1>
+        <p class="cdk-page__description">Browse published content by tag.</p>
+      </header>
+
+      {{ if gt (len .Data.Terms.Alphabetical) 0 }}
+        <ul class="cdk-tag-index">
+          {{ range .Data.Terms.Alphabetical }}
+            <li>
+              <a class="cdk-tag-index__link" href="{{ .Page.RelPermalink }}">
+                <span>{{ .Page.LinkTitle }}</span>
+                <span class="cdk-tag-index__count">{{ .Count }}</span>
+              </a>
+            </li>
+          {{ end }}
+        </ul>
+      {{ else }}
+        <p class="cdk-taxonomy__empty">No tags have been published yet.</p>
+      {{ end }}
+    </div>
+  </section>
+{{ end }}

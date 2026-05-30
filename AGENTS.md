@@ -34,6 +34,9 @@ This repository uses the Hugo static site generator. Agents (human or AI) contri
 - Use front matter consistently (`title`, `date`, `draft`, etc.)
 - Keep content in Markdown unless there is a strong reason otherwise
 - Use archetypes when creating new content
+- Name news entries with the `YYYY-MM-DD-slug.md` pattern
+- For news posts, prefer `summary` plus optional `tags` in front matter so
+  listings, metadata, and future tag-based navigation stay consistent
 - Prefer site-level overrides in `/layouts` and `/assets` before editing files in
   `/themes/ananke`
 - Treat the Ananke theme as an upstream dependency; only modify the theme
