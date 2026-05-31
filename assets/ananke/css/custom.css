@@ -661,6 +661,97 @@ body.commerce-devkit-site {
   margin: 0;
 }
 
+.cdk-roadmap-stages {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  margin: 1.75rem 0;
+}
+
+.cdk-roadmap-stage {
+  background: rgba(15, 23, 42, 0.44);
+  border: 1px solid var(--cdk-border);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding: 1.25rem;
+}
+
+.cdk-roadmap-stage--track {
+  border-style: dashed;
+}
+
+.cdk-roadmap-stage__icon {
+  color: var(--cdk-link);
+  margin-bottom: 0.25rem;
+}
+
+.cdk-roadmap-stage__icon svg {
+  display: block;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.cdk-roadmap-stage__number {
+  color: var(--cdk-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.cdk-roadmap-stage__name {
+  color: var(--cdk-text);
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.cdk-roadmap-stage__objective {
+  color: var(--cdk-muted);
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0 0 0.5rem;
+}
+
+.cdk-roadmap-badge {
+  align-items: center;
+  border-radius: 999px;
+  display: inline-flex;
+  font-size: 0.78rem;
+  font-weight: 600;
+  gap: 0.3rem;
+  letter-spacing: 0.03em;
+  margin-top: auto;
+  padding: 0.3rem 0.65rem;
+}
+
+.cdk-roadmap-badge svg {
+  flex: none;
+  height: 0.55rem;
+  width: 0.55rem;
+}
+
+.cdk-roadmap-badge--planned {
+  background: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.24);
+  color: var(--cdk-muted);
+}
+
+.cdk-roadmap-badge--in-progress {
+  background: rgba(56, 189, 248, 0.1);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: var(--cdk-link);
+}
+
+.cdk-roadmap-badge--done {
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  color: #4ade80;
+}
+
 .cdk-footer {
   padding: 0 0 1.5rem;
 }
