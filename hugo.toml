@@ -54,11 +54,18 @@ parent = 'about'
 weight = 1
 
 [[menu.main]]
+identifier = 'roadmap'
+name = 'Roadmap'
+pageRef = '/about/roadmap'
+parent = 'about'
+weight = 2
+
+[[menu.main]]
 identifier = 'contact'
 name = 'Contact'
 pageRef = '/about/contact'
 parent = 'about'
-weight = 2
+weight = 3
 
 [[menu.main]]
 identifier = 'news'
